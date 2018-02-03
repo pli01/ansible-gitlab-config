@@ -1,0 +1,10 @@
+---
+
+- name: "Check Gitlab settings"
+  fail:
+    msg: "missing required variable 'gitlab_application_settings'"
+  when: gitlab_application_settings is not defined
+
+# Manage Gitlab setting
+- name: "Manage Gitlab application settings"
+  include: "application_settings.yaml"

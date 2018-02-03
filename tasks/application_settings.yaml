@@ -1,0 +1,30 @@
+---
+# Manage Gitlab application settings
+#
+# `gitlab_application_settings` is a dictionnary of the form
+#    key: value
+#
+
+- name: "Get current settings value"
+  uri:
+    url: "{{ gitlab_api_url }}/application/settings"
+    method: GET
+    headers:
+      PRIVATE-TOKEN: "{{ gitlab_token }}"
+    status_code: 200, 404
+    validate_certs: "no"
+  register: gitlab_application_settings_request
+
+- name: "Update application settings"
+  when: (gitlab_application_settings_request.status == 200)
+  uri:
+    url: "{{ gitlab_api_url }}/application/settings"
+    method: PUT
+    body_format: json
+    headers:
+      PRIVATE-TOKEN: "{{ gitlab_token }}"
+    status_code: 200
+    body: "{{ gitlab_application_settings | to_json }}"
+    validate_certs: "no"
+  changed_when: true
+  register: gitlab_application_settings_request

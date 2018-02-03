@@ -1,0 +1,12 @@
+---
+
+# API token for Gitlab
+gitlab_token: "XXXXXXXXXXXXXXXXXXXX"
+
+# API URL for Gitlab
+gitlab_api_url: https://some-url-to-gitlab.com/api/v4
+
+# Variables to manage Gitlab settins
+# https://docs.gitlab.com/ce/api/settings.html
+gitlab_application_settings:
+  signup_enabled: true
