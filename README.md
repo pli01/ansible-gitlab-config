@@ -36,13 +36,11 @@ gitlab_token: "XXXXXXXXXXXXXXXXXXXX"
 gitlab_api_url: https://some-url-to-gitlab/api/v4
 ```
 
-Gitlab Config variables can be managed per project. The following example
-manages variables for two projects.
-
+The following example manages application settings (signup_enable)
 ```yaml
-# Variables to manage Gitlab settings
+# Variables to manage Gitlab settings (https://docs.gitlab.com/ce/api/settings.html)
 gitlab_application_settings:
-  signup_enabled: true
+  signup_enabled: false
 ...
 #
 
