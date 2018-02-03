@@ -33,16 +33,18 @@ API URL and token can be specified via
 gitlab_token: "XXXXXXXXXXXXXXXXXXXX"
 
 # API URL for Gitlab
-gitlab_api_url: https://some-url-to-gitlab.com/api/v4
+gitlab_api_url: https://some-url-to-gitlab/api/v4
 ```
 
 Gitlab Config variables can be managed per project. The following example
 manages variables for two projects.
 
 ```yaml
-# Variables to manage for each Gitlab project
+# Variables to manage Gitlab settings
 gitlab_application_settings:
-
+  signup_enabled: true
+...
+#
 
 ```yaml
 
