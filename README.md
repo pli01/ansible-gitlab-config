@@ -8,7 +8,7 @@ The role update Gitlab application settings
 Inspired from gitlab-ci-variables https://github.com/peay/ansible-gitlab-ci-variables
 
 [![Build Status](https://travis-ci.org/pli01/ansible-gitlab-config.svg?branch=master)](https://travis-ci.org/pli01/ansible-gitlab-config)
-[![Ansible Galaxy](https://img.shields.io/badge/ansible-pli01.gitlab--config-blue.svg)](https://galaxy.ansible.com/pli01/gitlab-config/)
+[![Ansible Galaxy](https://img.shields.io/badge/ansible-pli01.gitlab--config-blue.svg)](https://galaxy.ansible.com/pli01/ansible-gitlab-config/)
 
 Requirements
 ------------
