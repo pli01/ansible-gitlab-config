@@ -4,9 +4,125 @@
 gitlab_token: "XXXXXXXXXXXXXXXXXXXX"
 
 # API URL for Gitlab
-gitlab_api_url: https://some-url-to-gitlab.com/api/v4
+gitlab_api_url: https://some-url-to-gitlab/api/v4
 
 # Variables to manage Gitlab settins
 # https://docs.gitlab.com/ce/api/settings.html
 gitlab_application_settings:
   signup_enabled: true
+#  signin_enabled: true
+#  admin_notification_email: null
+#  after_sign_out_path: null
+#  after_sign_up_text: null
+#  akismet_api_key: null
+#  akismet_enabled: false
+#  authorized_keys_enabled: true
+#  auto_devops_enabled: false
+#  circuitbreaker_access_retries: 3
+#  circuitbreaker_check_interval: 1
+#  circuitbreaker_failure_count_threshold: 3
+#  circuitbreaker_failure_reset_time: 1800
+#  circuitbreaker_storage_timeout: 15
+#  clientside_sentry_dsn: null
+#  clientside_sentry_enabled: false
+#  container_registry_token_expire_delay: 5
+#  default_artifacts_expire_in: 30 days
+#  default_branch_protection: 2
+#  default_group_visibility: private
+#  default_project_visibility: internal
+#  default_projects_limit: 100000
+#  default_snippet_visibility: private
+#  disabled_oauth_sign_in_sources: []
+#  domain_blacklist_enabled: false
+#  domain_blacklist_raw: ''
+#  domain_whitelist_raw: ''
+#  dsa_key_restriction: 0
+#  ecdsa_key_restriction: 0
+#  ed25519_key_restriction: 0
+#  email_author_in_body: false
+#  enabled_git_access_protocol: null
+#  gitaly_timeout_default: 55
+#  gitaly_timeout_fast: 10
+#  gitaly_timeout_medium: 30
+#  gravatar_enabled: true
+#  hashed_storage_enabled: false
+#  help_page_hide_commercial_content: false
+#  help_page_support_url: null
+#  help_page_text: null
+#  home_page_url: null
+#  housekeeping_bitmaps_enabled: true
+#  housekeeping_enabled: true
+#  housekeeping_full_repack_period: 50
+#  housekeeping_gc_period: 200
+#  housekeeping_incremental_repack_period: 10
+#  html_emails_enabled: true
+#  import_sources:
+#    - github
+#    - bitbucket
+#    - gitlab
+#    - google_code
+#    - fogbugz
+#    - git
+#    - gitlab_project
+#    - gitea
+#  koding_enabled: false
+#  koding_url: null
+#  max_artifacts_size: 100
+#  max_attachment_size: 10
+#  max_pages_size: 100
+#  metrics_enabled: false
+#  metrics_host: localhost
+#  metrics_method_call_threshold: 10
+#  metrics_packet_size: 1
+#  metrics_pool_size: 16
+#  metrics_port: 8089
+#  metrics_sample_interval: 15
+#  metrics_timeout: 10
+#  password_authentication_enabled: true
+#  password_authentication_enabled_for_web: true
+#  performance_bar_allowed_group_id: null
+#  performance_bar_enabled: false
+#  plantuml_enabled: false
+#  plantuml_url: null
+#  polling_interval_multiplier: 1.0
+#  project_export_enabled: true
+#  prometheus_metrics_enabled: false
+#  recaptcha_enabled: false
+#  recaptcha_private_key: null
+#  recaptcha_site_key: null
+#  repository_checks_enabled: true
+#  repository_storages:
+#  - default
+#  require_two_factor_authentication: false
+#  restricted_visibility_levels: []
+#  rsa_key_restriction: 0
+#  send_user_confirmation_email: false
+#  sentry_dsn: null
+#  sentry_enabled: false
+#  session_expire_delay: 10080
+#  shared_runners_enabled: true
+#  shared_runners_text: null
+#  sidekiq_throttling_enabled: false
+#  sidekiq_throttling_factor: null
+#  sidekiq_throttling_queues: []
+#  sign_in_text: null
+#  signin_enabled: true
+#  signup_enabled: true
+#  terminal_max_session_time: 0
+#  throttle_authenticated_api_enabled: false
+#  throttle_authenticated_api_period_in_seconds: 3600
+#  throttle_authenticated_api_requests_per_period: 7200
+#  throttle_authenticated_web_enabled: false
+#  throttle_authenticated_web_period_in_seconds: 3600
+#  throttle_authenticated_web_requests_per_period: 7200
+#  throttle_unauthenticated_enabled: false
+#  throttle_unauthenticated_period_in_seconds: 3600
+#  throttle_unauthenticated_requests_per_period: 3600
+#  two_factor_grace_period: 48
+#  unique_ips_limit_enabled: false
+#  unique_ips_limit_per_user: 10
+#  unique_ips_limit_time_window: 3600
+#  usage_ping_enabled: true
+#  user_default_external: false
+#  user_oauth_applications: true
+#  version_check_enabled: true

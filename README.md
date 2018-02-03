@@ -1,13 +1,14 @@
 gitlab-config
 ===================
 
-This role allows to manage Gitlab configuration using Ansible.
-
-The role can create or update Gitlab Config variable value
+This role allows to manage Gitlab configuration via API using Ansible.
+The role update Gitlab application settings
+(https://docs.gitlab.com/ce/api/settings.html)
 
 Inspired from gitlab-ci-variables https://github.com/peay/ansible-gitlab-ci-variables
 
 [![Build Status](https://travis-ci.org/pli01/ansible-gitlab-config.svg?branch=master)](https://travis-ci.org/pli01/ansible-gitlab-config)
+[![Ansible Galaxy](https://img.shields.io/badge/ansible-pli01.gitlab--config-blue.svg)](https://galaxy.ansible.com/pli01/gitlab-config/)
 
 Requirements
 ------------
@@ -40,22 +41,8 @@ manages variables for two projects.
 
 ```yaml
 # Variables to manage for each Gitlab project
-gitlab_ci_variables:
-  - name: "group/project"
-    kind: "project"
-    variables:
-      - key: VARIABLE_1
-        value: value
+gitlab_application_settings:
 
-By default, the role will also check for Gitlab CI variables that
-are unknown (i.e., not specified in `gitlab_ci_variables`). This
-can be disabled using
 
 ```yaml
-# When enabled, check for unknown variables in Gitlab
-# not managed by this role
-gitlab_ci_check_unknown: false
-```
 
-This is purely a check. The role will not remove existing variables
-that are unknown.
