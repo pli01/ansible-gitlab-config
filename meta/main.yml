@@ -9,6 +9,11 @@ galaxy_info:
     - ci
 
   platforms:
+    - name: Ubuntu
+      versions:
+        - trusty
+        - xenial
     - name: Debian
       versions:
         - jessie
+        - stretch
