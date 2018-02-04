@@ -1,10 +1,37 @@
 ---
+- name: "Check Gitlab host"
+  fail:
+    msg: "missing required variable 'gitlab_host'"
+  when: ( gitlab_host is not defined ) or ( gitlab_host is none ) or ( gitlab_host | trim =="" )
+
+- name: "Check Gitlab auth token or user/password"
+  fail:
+    msg: "missing required variable: ( 'gitlab_token' ) or ( 'gitlab_user' 'gitlab_password' )"
+  when: ( ( gitlab_token is not defined ) or ( gitlab_token is none )  or ( gitlab_token | trim =="" ) )
+        and (
+            ( ( gitlab_user is not defined ) or ( gitlab_user is none )  or ( gitlab_user | trim =="" ) )
+        or ( ( gitlab_password is not defined ) or ( gitlab_password is none )  or ( gitlab_password | trim =="" ) )
+        )
 
 - name: "Check Gitlab settings"
   fail:
     msg: "missing required variable 'gitlab_application_settings'"
-  when: gitlab_application_settings is not defined
+  when: gitlab_api_url is not defined or
+        gitlab_application_settings is not defined
+
+- name: "Get Gitlab token"
+  include: "get_token.yaml"
+  when: ( gitlab_token is not defined ) or ( gitlab_token is none )  or ( gitlab_token | trim =="" )
+
+# Manage Gitlab setting
+- name: "Get Gitlab version"
+  include: "version.yaml"
+  when: ( gitlab_api_url is defined and gitlab_api_url ) 
+        and ( gitlab_token is defined and gitlab_token ) 
 
 # Manage Gitlab setting
 - name: "Manage Gitlab application settings"
   include: "application_settings.yaml"
+  when: ( gitlab_api_url is defined and gitlab_api_url ) 
+        and ( gitlab_token is defined and gitlab_token ) 
+        and ( gitlab_version is defined and gitlab_version ) 

@@ -29,11 +29,20 @@ Variables are documented in [defaults/main.yml](defaults/main.yml).
 
 API URL and token can be specified via
 ```yaml
+
+# Gitlab URL
+gitlab_host: 'https://some-url-to-gitlab'
+
 # API token for Gitlab
 gitlab_token: "XXXXXXXXXXXXXXXXXXXX"
 
 # API URL for Gitlab
-gitlab_api_url: https://some-url-to-gitlab/api/v4
+gitlab_api_url: "{{ gitlab_host }}/api/v4"
+
+# if no API token, autmatically generate one with admin user/password 
+# gitlab_user: "USER_ADMIN_PRIVILEGE"
+# gitlab_password: "XXX"
+
 ```
 
 The following example manages application settings (signup_enable)

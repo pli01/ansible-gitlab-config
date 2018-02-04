@@ -1,9 +1,9 @@
 ---
-gitlab_token: xxxx
-gitlab_api_url: http://localhost/api/v4
+#gitlab_token: ''
+#gitlab_api_url: http://localhost/api/v4
 
 
 # Variables to manage Gitlab settings
 gitlab_application_settings:
   signup_enabled: true
-  signin_enabled: true
+#  signin_enabled: true

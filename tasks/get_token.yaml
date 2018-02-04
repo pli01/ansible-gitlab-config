@@ -1,0 +1,41 @@
+- name: "Wait gitlab ready and login {{ gitlab_host }}"
+  uri:
+    url: "{{ gitlab_host }}"
+    method: GET
+    validate_certs: "no"
+    return_content: yes
+    follow_redirects: all
+    until: gitlab_version_request.status == 200
+    retries: 10
+    delay: 1
+  register: gitlab_login_request
+
+- name: prepare token script
+  copy:
+    src=token.sh
+    dest=/tmp/token.sh mode=0755
+
+- name: run token.sh
+  command: '/tmp/token.sh "{{ gitlab_host }}" "{{ gitlab_user }}" "{{ gitlab_password }}"'
+  register: get_token
+
+- name: get token result
+  fail: msg="Token Error!"
+  when: not( get_token.rc == 0 )
+
+- name: set private_token
+  set_fact:
+    gitlab_token: "{{ get_token.stdout }}"
+
+- name: "Try token and get version"
+  uri:
+    url: "{{ gitlab_api_url }}/version"
+    method: GET
+    headers:
+      PRIVATE-TOKEN: "{{ gitlab_token }}"
+    status_code: 200
+    validate_certs: "no"
+  until: gitlab_version_request.status == 200
+  retries: 10
+  delay: 1
+  register: gitlab_version_request

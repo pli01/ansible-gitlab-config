@@ -1,0 +1,22 @@
+- name: "Wait gitlab ready and get version"
+  uri:
+    url: "{{ gitlab_api_url }}/version"
+    method: GET
+    headers:
+      PRIVATE-TOKEN: "{{ gitlab_token }}"
+    status_code: 200
+    validate_certs: "no"
+  until: gitlab_version_request.status == 200
+  retries: 240
+  delay: 1
+  register: gitlab_version_request
+
+- name: "Check gitlab_token"
+  fail:
+    msg: "gitlab_token invalid"
+  when: gitlab_version_request.status is defined and gitlab_version_request.status == 401
+
+- name: "Set gitlab version"
+  set_fact:
+    gitlab_version: "{{ gitlab_version_request.json.version }}"
+    gitlab_revision: "{{ gitlab_version_request.json.revision }}"
