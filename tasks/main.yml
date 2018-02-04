@@ -26,12 +26,12 @@
 # Manage Gitlab setting
 - name: "Get Gitlab version"
   include: "version.yaml"
-  when: ( gitlab_api_url is defined and gitlab_api_url ) 
-        and ( gitlab_token is defined and gitlab_token ) 
+  when: ( gitlab_api_url is defined and gitlab_api_url )
+        and ( gitlab_token is defined and gitlab_token )
 
 # Manage Gitlab setting
 - name: "Manage Gitlab application settings"
   include: "application_settings.yaml"
-  when: ( gitlab_api_url is defined and gitlab_api_url ) 
-        and ( gitlab_token is defined and gitlab_token ) 
-        and ( gitlab_version is defined and gitlab_version ) 
+  when: ( gitlab_api_url is defined and gitlab_api_url )
+        and ( gitlab_token is defined and gitlab_token )
+        and ( gitlab_version is defined and gitlab_version )
