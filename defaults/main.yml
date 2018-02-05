@@ -134,3 +134,50 @@ gitlab_application_settings:
 #  user_default_external: false
 #  user_oauth_applications: true
 #  version_check_enabled: true
+
+# please refer to https://docs.gitlab.com/ce/api/users.html
+# sample user management
+
+gitlab_local_users: []
+#  - username: test-user1
+## uncomment to delete
+##    delete: true
+##    hard_delete: true
+## uncomment to delete
+#    name: "test user1"
+#    email: test-user1@test.com
+#    password: password01
+#    skip_confirmation: true
+#    reset_password: false
+#    can_create_group: false
+#
+#  - username: test-user2
+##    delete: true
+##    hard_delete: true
+#    name: "test user2"
+#    email: test-user2@test.com
+#    password: password02
+#    skip_confirmation: true
+#    reset_password: false
+#    avatar_url: ''
+#    bio: ''
+#    can_create_group: false
+#    can_create_project: false
+#    color_scheme_id: 1
+#    external: false
+#    identities: []
+#    is_admin: false
+#    linkedin: ''
+#    location: ''
+#    organization: ''
+#    projects_limit: 100000
+#    skype: ''
+#    state: active
+#    theme_id: 1
+#    twitter: ''
+#    two_factor_enabled: false
+#    website_url: ''
+#
+#  - username: test-user3
+#    delete: true
+#    hard_delete: true

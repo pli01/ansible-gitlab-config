@@ -1,0 +1,13 @@
+---
+- name: "Create user {{ username }}"
+  uri:
+    url: "{{ gitlab_api_url }}/users"
+    method: POST
+    body_format: json
+    headers:
+      PRIVATE-TOKEN: "{{ gitlab_token }}"
+    status_code: 201
+    body: "{{ json | to_json }}"
+    validate_certs: "no"
+  changed_when: true
+  register: gitlab_create_user

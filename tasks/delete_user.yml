@@ -1,0 +1,13 @@
+---
+- name: "Delete user {{ username }}"
+  uri:
+    url: "{{ gitlab_api_url }}/users/{{ user_id }}"
+    method: DELETE
+    body_format: json
+    headers:
+      PRIVATE-TOKEN: "{{ gitlab_token }}"
+    status_code: 204,404
+    body: "{{ json | to_json }}"
+    validate_certs: "no"
+  changed_when: true
+  register: gitlab_delete_user
