@@ -13,12 +13,6 @@
         or ( ( gitlab_password is not defined ) or ( gitlab_password is none )  or ( gitlab_password | trim =="" ) )
         )
 
-- name: "Check Gitlab settings"
-  fail:
-    msg: "missing required variable 'gitlab_application_settings'"
-  when: gitlab_api_url is not defined or
-        gitlab_application_settings is not defined
-
 - name: "Get Gitlab token"
   include: "get_token.yaml"
   when: ( gitlab_token is not defined ) or ( gitlab_token is none )  or ( gitlab_token | trim =="" )
