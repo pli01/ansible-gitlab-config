@@ -1,0 +1,23 @@
+---
+# https://docs.gitlab.com/ce/api/groups.html#group-modification
+- set_fact:
+    body: >
+      {{ lookup('template', 'update_group.json.j2', convert_data=False ) }}
+
+- debug: var=body
+
+- name: "Update group {{ name }}"
+  uri:
+    url: "{{ gitlab_api_url }}/groups/{{ group_id }}"
+    method: PUT
+    headers:
+      Content-Type: application/json
+      PRIVATE-TOKEN: "{{ gitlab_token }}"
+    status_code: 200
+    body_format: json
+    body: '{{ body }}'
+    validate_certs: "no"
+  changed_when: true
+  register: gitlab_update_group
+
+- debug: var=gitlab_update_group.json

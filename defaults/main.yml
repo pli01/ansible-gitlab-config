@@ -201,3 +201,15 @@ gitlab_local_users: []
 #    skip_confirmation: true
 #    can_create_group: true
 #    admin: true
+
+
+gitlab_groups: []
+# gitlab_groups:
+#   - name: grp1
+#     path: grp1
+##    delete: true
+#     description: "test"
+#     visibility: "private" # internal or public
+#     lfs_enabled: "false"
+#     request_access_enabled: "false"
+#     parent_id: 1

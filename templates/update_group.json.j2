@@ -1,0 +1,30 @@
+{#- template json -#}
+{#- 
+  ref: https://docs.gitlab.com/ce/api/groups.html#update-group
+
+request_access_enabled	boolean	no	Allow users to request member access.
+id	integer	yes	The ID of the group
+name	string	no	The name of the group
+path	string	no	The path of the group
+description	string	no	The description of the group
+visibility	string	no	The visibility level of the group. Can be private, internal, or public.
+lfs_enabled (optional)	boolean	no	Enable/disable Large File Storage (LFS) for the projects in this group
+request_access_enabled	boolean	no	Allow users to request member access.
+ -#}
+
+{
+  'name': '{{ json.name }}',
+  'path': '{{ json.path }}',
+{%- if ( json.description is defined ) and ( json.description ) -%}
+  'description': '{{ json.description | default ("") }}',
+{%- endif -%}
+{%- if ( json.visibility is defined ) and ( json.visibility ) -%}
+  'visibility': '{{ json.visibility | default ("private") }}',
+{%- endif -%}
+{%- if ( json.lfs_enabled is defined ) and ( json.lfs_enabled ) -%}
+  'lfs_enabled': '{{ json.lfs_enabled | default ("false") | bool | lower }}',
+{%- endif -%}
+{%- if ( json.request_access_enabled is defined ) and ( json.request_access_enabled ) -%}
+  'request_access_enabled': '{{ json.request_access_enabled | default ("false") | bool | lower  }}'
+{%- endif -%}
+}

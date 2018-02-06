@@ -10,6 +10,7 @@ gitlab_application_settings: {}
 #  signin_enabled: true
 
 gitlab_update_users: true
+__gitlab_local_users: []
 gitlab_local_users:
   - username: test-user1
     delete: true
@@ -65,3 +66,15 @@ gitlab_local_users:
 ##    delete: true
 ##    hard_delete: true
 #
+gitlab_groups:
+  - name: test
+    delete: true
+
+  - name: test
+    path: test
+#    delete: true
+    description: "test"
+    visibility: "private" # internal or public
+    lfs_enabled: "true"
+#     request_access_enabled: "false"
+#     parent_id: 1

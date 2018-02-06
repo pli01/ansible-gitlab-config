@@ -1,0 +1,32 @@
+{#- template json -#}
+{#- 
+  ref: https://docs.gitlab.com/ce/api/groups.html#new-group
+name	string	yes	The name of the group
+path	string	yes	The path of the group
+description	string	no	The group's description
+visibility	string	no	The group's visibility. Can be private, internal, or public.
+lfs_enabled	boolean	no	Enable/disable Large File Storage (LFS) for the projects in this group
+request_access_enabled	boolean	no	Allow users to request member access.
+parent_id	integer	no	The parent group id for creating nested group.
+
+ -#}
+
+{
+  'name': '{{ json.name }}',
+  'path': '{{ json.path }}',
+{%- if ( json.description is defined ) and ( json.description ) -%}
+  'description': '{{ json.description | default ("") }}',
+{%- endif -%}
+{%- if ( json.visibility is defined ) and ( json.visibility ) -%}
+  'visibility': '{{ json.visibility | default ("private") }}',
+{%- endif -%}
+{%- if ( json.lfs_enabled is defined ) and ( json.lfs_enabled ) -%}
+  'lfs_enabled': '{{ json.lfs_enabled | default ("false") | bool | lower }}',
+{%- endif -%}
+{%- if ( json.request_access_enabled is defined ) and ( json.request_access_enabled ) -%}
+  'request_access_enabled': '{{ json.request_access_enabled | default ("false") | bool | lower  }}',
+{%- endif -%}
+{%- if ( json.parent_id is defined ) and ( json.parent_id ) -%}
+  'parent_id': '{{ json.parent_id | int }}'
+{%- endif -%}
+}

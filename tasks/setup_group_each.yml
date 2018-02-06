@@ -1,0 +1,47 @@
+---
+# Manage Gitlab groups
+#
+# `gitlab_groups` is a list of the form
+#    - name: value
+#      path: value
+#      description: value
+#
+- name: "Get current settings for group {{ item.name }}"
+  uri:
+    url: "{{ gitlab_api_url }}/groups?search={{ item.name }}"
+    method: GET
+    headers:
+      PRIVATE-TOKEN: "{{ gitlab_token }}"
+    status_code: 200
+    validate_certs: "no"
+  register: gitlab_groups_request
+
+- set_fact:
+    current_group: ""
+- set_fact:
+    current_group: "{{ gitlab_groups_request.json | first }}"
+  when: ( gitlab_groups_request.json is defined ) and ( gitlab_groups_request.json )
+
+- include: delete_group.yml
+  vars:
+    name: "{{ item.name }}"
+    group_id: "{{ current_group.id }}"
+    json: "{{ item }}"
+  when: ( current_group.id is defined ) and ( current_group.id )
+        and ( item.delete is defined ) and ( item.delete | bool )
+
+- include: create_group.yml
+  vars:
+    name: "{{ item.name }}"
+    json: "{{ item }}"
+  when: ( ( current_group.id is not defined ) or ( current_group.id is none ) or ( current_group.id | trim =="" ) )
+       and ( item.delete is not defined ) or ( item.delete is defined and not ( item.delete | bool ) )
+
+- include: update_group.yml
+  vars:
+    name: "{{ item.name }}"
+    group_id: "{{ current_group.id }}"
+    json: "{{ item }}"
+  when: ( ( current_group.id is defined ) and ( current_group.id is not none ) and (current_group.id | trim !="") )
+       and ( ( item.delete is not defined ) or ( item.delete is defined and not item.delete ) )
+       and ( gitlab_update_groups | bool )

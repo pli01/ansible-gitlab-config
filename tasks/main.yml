@@ -38,3 +38,9 @@
   include: setup_user_each.yml
   with_items: "{{ gitlab_local_users }}"
   when: ( gitlab_api_url is defined and gitlab_api_url )
+
+# Manage Gitlab groups
+- name: "Manage Gitlab local groups"
+  include: setup_group_each.yml
+  with_items: "{{ gitlab_groups }}"
+  when: ( gitlab_groups is defined and gitlab_groups )

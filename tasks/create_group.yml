@@ -1,0 +1,23 @@
+---
+# https://docs.gitlab.com/ce/api/groups.html#group-creation
+- set_fact:
+    body: >
+      {{ lookup('template', 'create_group.json.j2', convert_data=False ) }}
+
+- debug: var=body
+
+- name: "Create group {{ name }}"
+  uri:
+    url: "{{ gitlab_api_url }}/groups"
+    method: POST
+    headers:
+      Content-Type: application/json
+      PRIVATE-TOKEN: "{{ gitlab_token }}"
+    status_code: 201
+    body_format: json
+    body: '{{ body }}'
+    validate_certs: "no"
+  changed_when: true
+  register: gitlab_create_group
+
+- debug: var=gitlab_create_group.json
