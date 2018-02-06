@@ -21,6 +21,13 @@ script:
     -e "gitlab_api_url=$GITLAB_API_URL" \
     -e "gitlab_token=$GITLAB_TOKEN" \
     tests/gitlab-config.yml --syntax-check
+- |
+  ANSIBLE_ROLES_PATH=$(pwd)/.. ansible-playbook \
+    -i tests/hostfile \
+    -e "role_name=ansible-gitlab-config" \
+    -e "gitlab_api_url=$GITLAB_API_URL" \
+    -e "gitlab_token=$GITLAB_TOKEN" \
+    tests/gitlab-config.yml --list-tasks
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
