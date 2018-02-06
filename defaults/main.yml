@@ -184,3 +184,19 @@ gitlab_local_users: []
 ##    delete: true
 ##    hard_delete: true
 ###    state: active
+
+#
+#  define ldap-user properties
+#    (password is not used, and reset_password: true must be enable , just to make create user)
+#
+#  - username: ldap-user1
+#    email: ldap-user1@test.com
+#    name: "ldap user1"
+#    password: '_NOT_USED_'
+#    reset_password: true
+#    update_password: false
+#    extern_uid: 'uid=ldap-user1,ou=people,dc=test,dc=com'
+#    provider: 'ldapmain'
+#    skip_confirmation: true
+#    can_create_group: true
+#    admin: true
