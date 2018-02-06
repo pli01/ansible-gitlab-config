@@ -2,8 +2,11 @@ gitlab-config
 ===================
 
 This role allows to manage Gitlab configuration via API using Ansible.
-The role update Gitlab application settings
-(https://docs.gitlab.com/ce/api/settings.html)
+
+The role manage Gitlab via /api/v4
+ * application settings: (https://docs.gitlab.com/ce/api/settings.html)
+ * users : (https://docs.gitlab.com/ce/api/users.html)
+ * groups : (https://docs.gitlab.com/ce/api/groups.html)
 
 Inspired from gitlab-ci-variables https://github.com/peay/ansible-gitlab-ci-variables
 
@@ -52,6 +55,23 @@ gitlab_application_settings:
   signup_enabled: false
 ...
 #
+# Variable to manage users
+#
+gitlab_local_users:
+  - username: test-user1
+    name: "test user1"
+    email: test-user1@test.com
+    password: password01
+    skip_confirmation: true
+    reset_password: false
+    can_create_group: false
+...
+#
+# Variable to manage groups
+#
+# gitlab_groups:
+#   - name: grp1
+#     path: grp1
 
 ```
 
