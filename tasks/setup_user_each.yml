@@ -6,7 +6,6 @@
 #      name: value
 #      email: value
 #
-
 - name: "Get current settings for user {{ item.username }}"
   uri:
     url: "{{ gitlab_api_url }}/users?username={{ item.username }}"
@@ -25,11 +24,17 @@
 
 - name: difference
   debug:
-   msg: "{{ item | difference(current_user) | sort }}"
+    msg: "{{ item | difference(current_user) | sort }}"
 
 - name: intersect
   debug:
-   msg: "{{ item | intersect(current_user) |sort }}"
+    msg: "{{ item | intersect(current_user) |sort }}"
+
+- set_fact:
+    user_intersect: "{{ item | intersect(current_user) |sort }}"
+
+- debug:
+    var: user_intersect
 
 - include: delete_user.yml
   vars:

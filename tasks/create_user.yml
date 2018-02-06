@@ -1,13 +1,23 @@
 ---
+# https://docs.gitlab.com/ce/api/users.html#user-creation
+- set_fact:
+    body: >
+      {{ lookup('template', 'create_user.json.j2', convert_data=False ) }}
+
+- debug: var=body
+
 - name: "Create user {{ username }}"
   uri:
     url: "{{ gitlab_api_url }}/users"
     method: POST
-    body_format: json
     headers:
+      Content-Type: application/json
       PRIVATE-TOKEN: "{{ gitlab_token }}"
     status_code: 201
-    body: "{{ json | to_json }}"
+    body_format: json
+    body: '{{ body }}'
     validate_certs: "no"
   changed_when: true
   register: gitlab_create_user
+
+- debug: var=gitlab_create_user.json
