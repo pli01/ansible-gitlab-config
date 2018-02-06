@@ -53,5 +53,5 @@ gitlab_application_settings:
 ...
 #
 
-```yaml
+```
 
