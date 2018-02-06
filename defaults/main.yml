@@ -16,8 +16,11 @@ gitlab_api_url: "{{ gitlab_host }}/api/v4"
 
 # Variables to manage Gitlab settins
 # https://docs.gitlab.com/ce/api/settings.html
-gitlab_application_settings:
-  signup_enabled: true
+
+# gitlab_application_settings: {}
+
+# gitlab_application_settings:
+#  signup_enabled: true
 #  signin_enabled: true
 #  admin_notification_email: null
 #  after_sign_out_path: null
@@ -135,8 +138,13 @@ gitlab_application_settings:
 #  user_oauth_applications: true
 #  version_check_enabled: true
 
+# users
+#
 # please refer to https://docs.gitlab.com/ce/api/users.html
-# sample user management
+#   gitlab_update_users: false ( create/delete only user)
+#   gitlab_update_users: true ( create/delete user and update if exist )
+#      per user option : update_password: false | true
+gitlab_update_users: false
 
 gitlab_local_users: []
 #  - username: test-user1
@@ -146,6 +154,8 @@ gitlab_local_users: []
 #    skip_confirmation: true
 #    reset_password: false
 #    can_create_group: false
+## set to true to update password
+#    update_password: false
 ## uncomment to delete
 ##    delete: true
 ##    hard_delete: true

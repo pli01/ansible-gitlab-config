@@ -1,13 +1,24 @@
 ---
+# https://docs.gitlab.com/ce/api/users.html#user-modification
+- set_fact:
+    body: >
+      {{ lookup('template', 'update_user.json.j2', convert_data=False ) }}
+
+- debug: var=body
+
 - name: "Update user {{ username }}"
   uri:
     url: "{{ gitlab_api_url }}/users/{{ user_id }}"
     method: PUT
-    body_format: json
     headers:
+      Content-Type: application/json
       PRIVATE-TOKEN: "{{ gitlab_token }}"
     status_code: 200
-    body: "{{ json | to_json }}"
+    body_format: json
+#    body: "{{ json | to_json }}"
+    body: '{{ body }}'
     validate_certs: "no"
   changed_when: true
   register: gitlab_update_user
+
+- debug: var=gitlab_update_user.json

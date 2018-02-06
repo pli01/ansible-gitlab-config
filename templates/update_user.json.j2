@@ -1,0 +1,55 @@
+{#- template json -#}
+{#- 
+  ref: https://docs.gitlab.com/ce/api/users.html#user-modification
+    email - Email
+    username - Username
+    name - Name
+    password - Password
+    skype - Skype ID
+    linkedin - LinkedIn
+    twitter - Twitter account
+    website_url - Website URL
+    organization - Organization name
+    projects_limit - Limit projects each user can create
+    extern_uid - External UID
+    provider - External provider name
+    bio - User's biography
+    location (optional) - User's location
+    admin (optional) - User is admin - true or false (default)
+    can_create_group (optional) - User can create groups - true or false
+    skip_reconfirmation (optional) - Skip reconfirmation - true or false (default)
+    external (optional) - Flags the user as external - true or false(default)
+    avatar (optional) - Image file for user's avatar
+ -#}
+
+{
+  'username': '{{ json.username }}',
+  'name': '{{ json.name }}',
+  'email': '{{ json.email }}',
+{%- if ( json.update_password is defined ) and ( json.update_password ) and ( json.password is defined ) and ( json.password ) -%}
+  'password': '{{ json.password }}',
+{%- endif -%}
+  'skip_reconfirmation': '{{ json.skip_confirmation | default ("false") | bool | lower }}',
+  'admin': '{{ json.admin | default ("false") | bool | lower  }}',
+  'external': '{{ json.external | default ("false") | bool | lower  }}',
+{%- if ( json.projects_limit is defined ) and ( json.projects_limit ) -%}
+  'projects_limit': '{{ json.projects_limit | int }}',
+{%- endif -%}
+{%- if ( json.can_create_group is defined ) -%}
+  'can_create_group': '{{ json.can_create_group | bool | lower }}',
+{%- endif -%}
+{%- if ( json.extern_uid is defined ) and ( json.extern_uid ) -%}
+  'extern_uid': '{{ json.extern_uid }}',
+{%- endif -%}
+{%- if ( json.provider is defined ) -%}
+  'provider': '{{ json.provider }}',
+{%- endif -%}
+  'avatar': '{{ json.avatar | default ("") }}',
+  'location': '{{ json.location | default ("") }}',
+  'bio': '{{ json.bio | default ("") }}',
+  'skype': '{{ json.skype | default ("") }}',
+  'linkedin': '{{ json.linkedin | default ("") }}',
+  'twitter': '{{ json.twitter | default ("") }}',
+  'website_url': '{{ json.website_url | default ("") }}',
+  'organization': '{{ json.organization | default ("") }}'
+}

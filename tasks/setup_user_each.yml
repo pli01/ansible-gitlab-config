@@ -22,20 +22,20 @@
     current_user: "{{ gitlab_users_request.json | first }}"
   when: ( gitlab_users_request.json is defined ) and ( gitlab_users_request.json )
 
-- name: difference
-  debug:
-    msg: "{{ item | difference(current_user) | sort }}"
-
-- name: intersect
-  debug:
-    msg: "{{ item | intersect(current_user) |sort }}"
-
-- set_fact:
-    user_intersect: "{{ item | intersect(current_user) |sort }}"
-
-- debug:
-    var: user_intersect
-
+#- name: difference
+#  debug:
+#    msg: "{{ item | difference(current_user) | sort }}"
+#
+#- name: intersect
+#  debug:
+#    msg: "{{ item | intersect(current_user) |sort }}"
+#
+#- set_fact:
+#    user_intersect: "{{ item | intersect(current_user) |sort }}"
+#
+#- debug:
+#    var: user_intersect
+#
 - include: delete_user.yml
   vars:
     username: "{{ item.username }}"
@@ -51,9 +51,6 @@
   when: ( ( current_user.id is not defined ) or ( current_user.id is none ) or ( current_user.id | trim =="" ) )
        and ( item.delete is not defined ) or ( item.delete is defined and not ( item.delete | bool ) )
 
-- set_fact:
-    update_user: false
-
 - include: update_user.yml
   vars:
     username: "{{ item.username }}"
@@ -61,4 +58,4 @@
     json: "{{ item }}"
   when: ( ( current_user.id is defined ) and ( current_user.id is not none ) and (current_user.id | trim !="") )
        and ( ( item.delete is not defined ) or ( item.delete is defined and not item.delete ) )
-       and ( update_user | bool )
+       and ( gitlab_update_users | bool )
