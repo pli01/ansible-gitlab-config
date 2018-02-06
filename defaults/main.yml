@@ -91,6 +91,7 @@ gitlab_api_url: "{{ gitlab_host }}/api/v4"
 #  metrics_timeout: 10
 #  password_authentication_enabled: true
 #  password_authentication_enabled_for_web: true
+#  password_authentication_enabled_for_git: true
 #  performance_bar_allowed_group_id: null
 #  performance_bar_enabled: false
 #  plantuml_enabled: false
