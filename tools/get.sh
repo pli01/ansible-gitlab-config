@@ -4,9 +4,10 @@ gitlab_token="${GITLAB_TOKEN}"
 gitlab_api_url=${GITLAB_HOST}/api/v4
 
 #api=users
-api=application/settings
+api=${1:-application/settings}
 # GET
-curl -sSfL --header "PRIVATE-TOKEN: $gitlab_token" $gitlab_api_url/$api | python -mjson.tool
+curl -sSfL --header "PRIVATE-TOKEN: $gitlab_token" $gitlab_api_url/$api 
+#| python -mjson.tool
 
 # PUT 200 OK
 #curl --request PUT -IsSfL --header "PRIVATE-TOKEN: $gitlab_token" "$gitlab_api_url/application/settings?signup_enabled=false&default_project_visibility=internal" 
