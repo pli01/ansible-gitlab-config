@@ -17,6 +17,7 @@ Requirements
 ------------
 
 Gitlab with v4 API (Gitlab 9.0+).
+Tested on gitlab 10.4.2
 
 Installation
 -------------
@@ -48,7 +49,7 @@ gitlab_api_url: "{{ gitlab_host }}/api/v4"
 
 ```
 
-The following example manages application settings (signup_enable)
+The following example manages application settings (ex: signup_enable)
 ```yaml
 # Variables to manage Gitlab settings (https://docs.gitlab.com/ce/api/settings.html)
 gitlab_application_settings:
@@ -69,9 +70,8 @@ gitlab_local_users:
 #
 # Variable to manage groups
 #
-# gitlab_groups:
-#   - name: grp1
-#     path: grp1
+gitlab_groups:
+  - name: grp1
+    path: grp1
 
 ```
-
