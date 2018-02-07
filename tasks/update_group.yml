@@ -4,7 +4,7 @@
     body: >
       {{ lookup('template', 'update_group.json.j2', convert_data=False ) }}
 
-- debug: var=body
+#- debug: var=body
 
 - name: "Update group {{ name }}"
   uri:
@@ -20,4 +20,4 @@
   changed_when: true
   register: gitlab_update_group
 
-- debug: var=gitlab_update_group.json
+#- debug: var=gitlab_update_group.json

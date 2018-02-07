@@ -1,0 +1,23 @@
+---
+# https://docs.gitlab.com/ce/api/projects.html#create-project
+- set_fact:
+    body: >
+      {{ lookup('template', 'create_project.json.j2', convert_data=False ) }}
+
+#- debug: var=body
+
+- name: "Create project {{ name }}"
+  uri:
+    url: "{{ gitlab_api_url }}/projects"
+    method: POST
+    headers:
+      Content-Type: application/json
+      PRIVATE-TOKEN: "{{ gitlab_token }}"
+    status_code: 201
+    body_format: json
+    body: '{{ body }}'
+    validate_certs: "no"
+  changed_when: true
+  register: gitlab_create_project
+
+#- debug: var=gitlab_create_project.json

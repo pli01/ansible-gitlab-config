@@ -1,0 +1,10 @@
+---
+- name: "Get current settings for namespace {{ name }}"
+  uri:
+    url: '{{ gitlab_api_url }}/namespaces/{{ name }}'
+    method: GET
+    headers:
+      PRIVATE-TOKEN: "{{ gitlab_token }}"
+    status_code: 200,404
+    validate_certs: "no"
+  register: gitlab_namespaces_request

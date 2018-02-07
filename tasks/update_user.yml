@@ -4,7 +4,7 @@
     body: >
       {{ lookup('template', 'update_user.json.j2', convert_data=False ) }}
 
-- debug: var=body
+#- debug: var=body
 
 - name: "Update user {{ username }}"
   uri:
@@ -21,4 +21,4 @@
   changed_when: true
   register: gitlab_update_user
 
-- debug: var=gitlab_update_user.json
+#- debug: var=gitlab_update_user.json

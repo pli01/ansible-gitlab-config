@@ -44,3 +44,9 @@
   include: setup_group_each.yml
   with_items: "{{ gitlab_groups }}"
   when: ( gitlab_groups is defined and gitlab_groups )
+
+# Manage Gitlab projects
+- name: "Manage Gitlab local projects"
+  include: setup_project_each.yml
+  with_items: "{{ gitlab_projects }}"
+  when: ( gitlab_projects is defined and gitlab_projects )

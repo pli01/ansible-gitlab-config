@@ -203,6 +203,7 @@ gitlab_local_users: []
 #    admin: true
 
 
+gitlab_update_groups: true
 gitlab_groups: []
 # gitlab_groups:
 #   - name: grp1
@@ -213,3 +214,17 @@ gitlab_groups: []
 #     lfs_enabled: "false"
 #     request_access_enabled: "false"
 #     parent_id: 1
+
+gitlab_update_projects: false
+gitlab_projects: []
+#  - name: "repo test1 in group1"
+#    path: test1
+#    namespace: group1
+#    issues_enabled: false
+#    jobs_enabled: false
+#    wiki_enabled: false
+#    snippets_enabled: false
+#    merge_requests_enabled: false
+#    description: "my repo test1"
+#    visibility: "private"
+##    delete: false

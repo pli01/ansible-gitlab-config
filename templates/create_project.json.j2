@@ -1,0 +1,87 @@
+{#- template json -#}
+{#- 
+  ref: https://docs.gitlab.com/ce/api/projects.html#create-project
+name 	string 	yes if path is not provided 	The name of the new project. Equals path if not provided.
+path 	string 	yes if name is not provided 	Repository name for new project. Generated based on name if not provided (generated lowercased with dashes).
+namespace_id 	integer 	no 	Namespace for the new project (defaults to the current user's namespace)
+description 	string 	no 	Short project description
+issues_enabled 	boolean 	no 	Enable issues for this project
+merge_requests_enabled 	boolean 	no 	Enable merge requests for this project
+jobs_enabled 	boolean 	no 	Enable jobs for this project
+wiki_enabled 	boolean 	no 	Enable wiki for this project
+snippets_enabled 	boolean 	no 	Enable snippets for this project
+resolve_outdated_diff_discussions 	boolean 	no 	Automatically resolve merge request diffs discussions on lines changed with a push
+container_registry_enabled 	boolean 	no 	Enable container registry for this project
+shared_runners_enabled 	boolean 	no 	Enable shared runners for this project
+visibility 	string 	no 	See project visibility level
+import_url 	string 	no 	URL to import repository from
+public_jobs 	boolean 	no 	If true, jobs can be viewed by non-project-members
+only_allow_merge_if_pipeline_succeeds 	boolean 	no 	Set whether merge requests can only be merged with successful jobs
+only_allow_merge_if_all_discussions_are_resolved 	boolean 	no 	Set whether merge requests can only be merged when all the discussions are resolved
+lfs_enabled 	boolean 	no 	Enable LFS
+request_access_enabled 	boolean 	no 	Allow users to request member access
+tag_list 	array 	no 	The list of tags for a project; put array of tags, that should be finally assigned to a project
+avatar 	mixed 	no 	Image file for avatar of the project
+printing_merge_request_link_enabled 	boolean 	no 	Show link to create/view merge request when pushing from the command line
+ci_config_path 	string 	no 	The path to CI config file
+-#}
+{
+  'name': '{{ json.name }}',
+  'path': '{{ json.path }}',
+{%- if ( namespace.id is defined ) and ( namespace.id ) -%}
+  'namespace_id': '{{ namespace.id | int }}',
+{%- endif -%}
+{%- if ( json.description is defined ) and ( json.description ) -%}
+  'description': '{{ json.description | default ("") }}',
+{%- endif -%}
+{%- if ( json.issues_enabled is defined ) -%}
+  'issues_enabled': '{{ json.issues_enabled | default ("false") | bool | lower }}',
+{%- endif -%}
+{%- if ( json.jobs_enabled is defined ) -%}
+  'jobs_enabled': '{{ json.jobs_enabled | default ("false") | bool | lower }}',
+{%- endif -%}
+{%- if ( json.wiki_enabled is defined ) -%}
+  'wiki_enabled': '{{ json.wiki_enabled | default ("false") | bool | lower }}',
+{%- endif -%}
+{%- if ( json.snippets_enabled is defined ) -%}
+  'snippets_enabled': '{{ json.snippets_enabled | default ("false") | bool | lower }}',
+{%- endif -%}
+{%- if ( json.merge_requests_enabled is defined ) -%}
+  'merge_requests_enabled': '{{ json.merge_requests_enabled | default ("false") | bool | lower }}',
+{%- endif -%}
+{%- if ( json.container_registry_enabled is defined ) -%}
+  'container_registry_enabled': '{{ json.container_registry_enabled | default ("false") | bool | lower }}',
+{%- endif -%}
+{%- if ( json.resolve_outdated_diff_discussions_enabled is defined ) -%}
+  'resolve_outdated_diff_discussions_enabled': '{{ json.resolve_outdated_diff_discussions_enabled | default ("false") | bool | lower }}',
+{%- endif -%}
+{%- if ( json.shared_runners_enabled is defined ) -%}
+  'shared_runners_enabled': '{{ json.shared_runners_enabled | default ("false") | bool | lower }}',
+{%- endif -%}
+
+{%- if ( json.public_jobs is defined ) -%}
+  'public_jobs': '{{ json.public_jobs | default ("false") | bool | lower }}',
+{%- endif -%}
+
+{%- if ( json.import_url is defined ) and ( json.import_url ) -%}
+  'import_url': '{{ json.import_url | default ("") }}',
+{%- endif -%}
+
+{%- if ( json.visibility is defined ) and ( json.visibility ) -%}
+  'visibility': '{{ json.visibility | default ("private") }}',
+{%- endif -%}
+{%- if ( json.lfs_enabled is defined ) -%}
+  'lfs_enabled': '{{ json.lfs_enabled | default ("false") | bool | lower }}',
+{%- endif -%}
+{%- if ( json.request_access_enabled is defined ) -%}
+  'request_access_enabled': '{{ json.request_access_enabled | default ("false") | bool | lower  }}',
+{%- endif -%}
+{#- avatar -#}
+{%- if ( json.printing_merge_request_link_enabled is defined ) -%}
+  'printing_merge_request_link_enabled': '{{ json.printing_merge_request_link_enabled | default ("false") | bool | lower }}',
+{%- endif -%}
+{%- if ( json.visibility is defined ) and ( json.visibility ) -%}
+  'visibility': '{{ json.visibility | default ("") }}',
+{%- endif -%}
+
+}

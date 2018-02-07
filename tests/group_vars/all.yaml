@@ -10,12 +10,12 @@ gitlab_application_settings: {}
 #  signin_enabled: true
 
 gitlab_update_users: true
-__gitlab_local_users: []
-gitlab_local_users:
-  - username: test-user1
-    delete: true
-    hard_delete: true
-
+gitlab_local_users: []
+__gitlab_local_users:
+#  - username: test-user1
+#    delete: true
+#    hard_delete: true
+#
 #  - username: test-user2
 #    delete: true
 #    hard_delete: true
@@ -66,15 +66,55 @@ gitlab_local_users:
 ##    delete: true
 ##    hard_delete: true
 #
+_gitlab_groups: []
 gitlab_groups:
-  - name: test
-    delete: true
-
-  - name: test
-    path: test
+#  - name: test
 #    delete: true
-    description: "test"
+
+  - name: group1
+    path: group1
+#    delete: true
+    description: "group1"
     visibility: "private" # internal or public
     lfs_enabled: "true"
 #     request_access_enabled: "false"
 #     parent_id: 1
+
+  - name: group2
+    path: group2
+#    delete: true
+    description: "group2"
+    visibility: "internal" # internal or public
+    lfs_enabled: "true"
+#     request_access_enabled: "false"
+#
+gitlab_projects:
+  - name: "user repo test1 for gitlab-config"
+    path: test1
+    description: "my test1"
+    namespace: gitlab-config
+    delete: true
+
+  - name: "group repo test2 for group1"
+    path: test2
+    namespace: group1
+    description: "my test2"
+    visibility: "private"
+    delete: true
+
+  - name: "group repo test3 for group2"
+    path: test3
+    namespace: group2
+    delete: true
+
+  - name: "group repo test3 for group2"
+    path: test3
+    namespace: group2
+    issues_enabled: false
+    jobs_enabled: false
+    wiki_enabled: false
+    snippets_enabled: false
+    merge_requests_enabled: false
+    description: "my test3"
+    visibility: "private"
+    delete: false
