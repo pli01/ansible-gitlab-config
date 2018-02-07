@@ -38,6 +38,9 @@ ci_config_path 	string 	no 	The path to CI config file
 {%- if ( json.issues_enabled is defined ) -%}
   'issues_enabled': '{{ json.issues_enabled | default ("false") | bool | lower }}',
 {%- endif -%}
+{%- if ( json.merge_requests_enabled is defined ) -%}
+  'merge_requests_enabled': '{{ json.merge_requests_enabled | default ("false") | bool | lower }}',
+{%- endif -%}
 {%- if ( json.jobs_enabled is defined ) -%}
   'jobs_enabled': '{{ json.jobs_enabled | default ("false") | bool | lower }}',
 {%- endif -%}
@@ -47,29 +50,29 @@ ci_config_path 	string 	no 	The path to CI config file
 {%- if ( json.snippets_enabled is defined ) -%}
   'snippets_enabled': '{{ json.snippets_enabled | default ("false") | bool | lower }}',
 {%- endif -%}
-{%- if ( json.merge_requests_enabled is defined ) -%}
-  'merge_requests_enabled': '{{ json.merge_requests_enabled | default ("false") | bool | lower }}',
+{%- if ( json.resolve_outdated_diff_discussions is defined ) -%}
+  'resolve_outdated_diff_discussions': '{{ json.resolve_outdated_diff_discussions | default ("false") | bool | lower }}',
 {%- endif -%}
 {%- if ( json.container_registry_enabled is defined ) -%}
   'container_registry_enabled': '{{ json.container_registry_enabled | default ("false") | bool | lower }}',
 {%- endif -%}
-{%- if ( json.resolve_outdated_diff_discussions_enabled is defined ) -%}
-  'resolve_outdated_diff_discussions_enabled': '{{ json.resolve_outdated_diff_discussions_enabled | default ("false") | bool | lower }}',
-{%- endif -%}
 {%- if ( json.shared_runners_enabled is defined ) -%}
   'shared_runners_enabled': '{{ json.shared_runners_enabled | default ("false") | bool | lower }}',
 {%- endif -%}
-
-{%- if ( json.public_jobs is defined ) -%}
-  'public_jobs': '{{ json.public_jobs | default ("false") | bool | lower }}',
+{%- if ( json.visibility is defined ) and ( json.visibility ) -%}
+  'visibility': '{{ json.visibility | default ("private") }}',
 {%- endif -%}
-
 {%- if ( json.import_url is defined ) and ( json.import_url ) -%}
   'import_url': '{{ json.import_url | default ("") }}',
 {%- endif -%}
-
-{%- if ( json.visibility is defined ) and ( json.visibility ) -%}
-  'visibility': '{{ json.visibility | default ("private") }}',
+{%- if ( json.public_jobs is defined ) -%}
+  'public_jobs': '{{ json.public_jobs | default ("false") | bool | lower }}',
+{%- endif -%}
+{%- if ( json.only_allow_merge_if_pipeline_succeeds is defined ) -%}
+  'only_allow_merge_if_pipeline_succeeds': '{{ json.only_allow_merge_if_pipeline_succeeds | default ("false") | bool | lower }}',
+{%- endif -%}
+{%- if ( json.only_allow_merge_if_all_discussions_are_resolved is defined ) -%}
+  'only_allow_merge_if_all_discussions_are_resolved': '{{ json.only_allow_merge_if_all_discussions_are_resolved | default ("false") | bool | lower }}',
 {%- endif -%}
 {%- if ( json.lfs_enabled is defined ) -%}
   'lfs_enabled': '{{ json.lfs_enabled | default ("false") | bool | lower }}',
@@ -77,12 +80,11 @@ ci_config_path 	string 	no 	The path to CI config file
 {%- if ( json.request_access_enabled is defined ) -%}
   'request_access_enabled': '{{ json.request_access_enabled | default ("false") | bool | lower  }}',
 {%- endif -%}
-{#- avatar -#}
+{#- TODO: taglist -#}
+{#- TODO: avatar -#}
 {%- if ( json.printing_merge_request_link_enabled is defined ) -%}
   'printing_merge_request_link_enabled': '{{ json.printing_merge_request_link_enabled | default ("false") | bool | lower }}',
+{%- if ( json.ci_config_path is defined ) and ( json.ci_config_path ) -%}
+  'ci_config_path': '{{ json.ci_config_path | default ("") }}',
 {%- endif -%}
-{%- if ( json.visibility is defined ) and ( json.visibility ) -%}
-  'visibility': '{{ json.visibility | default ("") }}',
-{%- endif -%}
-
 }

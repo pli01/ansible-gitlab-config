@@ -17,7 +17,7 @@ gitlab_api_url: "{{ gitlab_host }}/api/v4"
 # Variables to manage Gitlab settins
 # https://docs.gitlab.com/ce/api/settings.html
 
-# gitlab_application_settings: {}
+gitlab_application_settings: {}
 
 # gitlab_application_settings:
 #  signup_enabled: true

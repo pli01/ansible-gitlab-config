@@ -6,7 +6,7 @@
 #      path: value
 #      description: value
 #
-# Durty: urlencode does not encode slash
+# Dirty: urlencode does not encode slash
 - set_fact:
     path_with_namespace: '{{ item.path }}'
     pattern: '\/'
