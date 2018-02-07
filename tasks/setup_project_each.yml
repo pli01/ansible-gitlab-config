@@ -76,13 +76,15 @@
     json: "{{ item }}"
   when: ( ( current_project.id is not defined ) or ( current_project.id is none ) or ( current_project.id | trim =="" ) )
         and ( ( current_namespace.id is defined ) or ( current_namespace.id ) )
-       and ( ( item.delete is not defined ) or ( item.delete is defined and not ( item.delete | bool ) ) )
+        and ( ( item.delete is not defined ) or ( item.delete is defined and not ( item.delete | bool ) ) )
 
 - include: update_project.yml
   vars:
     name: "{{ item.name }}"
+    path_name: "{{ path_with_namespace_urlencoded }}"
     project_id: "{{ current_project.id }}"
     json: "{{ item }}"
   when: ( ( current_project.id is defined ) and ( current_project.id is not none ) and (current_project.id | trim !="") )
-       and ( ( item.delete is not defined ) or ( item.delete is defined and not item.delete ) )
-       and ( gitlab_update_projects is defined ) and ( gitlab_update_projects | bool )
+        and ( ( current_namespace.id is defined ) or ( current_namespace.id ) )
+        and ( ( item.delete is not defined ) or ( item.delete is defined and not item.delete ) )
+        and ( gitlab_update_projects is defined ) and ( gitlab_update_projects | bool )
