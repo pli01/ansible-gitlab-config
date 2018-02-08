@@ -10,8 +10,8 @@ gitlab_application_settings: {}
 #  signin_enabled: true
 
 gitlab_update_users: true
-gitlab_local_users: []
-__gitlab_local_users:
+_gitlab_local_users: []
+gitlab_local_users:
 #  - username: test-user1
 #    delete: true
 #    hard_delete: true
@@ -66,7 +66,7 @@ __gitlab_local_users:
 ##    delete: true
 ##    hard_delete: true
 #
-_gitlab_groups: []
+i_gitlab_groups: []
 gitlab_groups:
 #  - name: test
 #    delete: true
@@ -79,42 +79,68 @@ gitlab_groups:
     lfs_enabled: "true"
 #     request_access_enabled: "false"
 #     parent_id: 1
-
-  - name: group2
-    path: group2
-#    delete: true
-    description: "group2"
-    visibility: "internal" # internal or public
-    lfs_enabled: "true"
-#     request_access_enabled: "false"
+    members:
+      - name: test-user2
+        access_level: 10 # guest # reporter developer master 
+        expires_at: "2016-09-26"
+      - name: test-user3
+        access_level:  10 # guest # reporter developer master 
+        expires_at: "2016-09-26"
 #
-gitlab_projects:
+#  - name: group2
+#    path: group2
+##    delete: true
+#    description: "group2"
+#    visibility: "internal" # internal or public
+#    lfs_enabled: "true"
+##     request_access_enabled: "false"
+#    members:
+#      - name: test-user2
+#        access_level: guest # reporter developer master 
+#        expires_at: "2016-09-26"
+#      - name: test-user3
+#        access_level: guest # reporter developer master 
+#        expires_at: "2016-09-26"
+#
+gitlab_update_projects: true
+gitlab_projects: []
+_gitlab_projects:
   - name: "user repo test1 for gitlab-config"
     path: test1
-    description: "my test1"
     namespace: gitlab-config
-    delete: true
-
-  - name: "group repo test2 for group1"
-    path: test2
-    namespace: group1
-    description: "my test2"
-    visibility: "private"
-    delete: true
-
-  - name: "group repo test3 for group2"
-    path: test3
-    namespace: group2
-    delete: true
-
-  - name: "group repo test3 for group2"
-    path: test3
-    namespace: group2
-    issues_enabled: false
-    jobs_enabled: false
-    wiki_enabled: false
-    snippets_enabled: false
-    merge_requests_enabled: false
-    description: "my test3"
-    visibility: "private"
+    description: "my test1 updated"
     delete: false
+    members:
+      - name: test-user1
+        access_level: 10 # guest # reporter developer master 
+        expires_at: "2016-09-26"
+    share:
+      - name: group1
+        group_access: 10 # guest # 
+        expires_at: "2016-09-26"
+      - name: group2
+        group_access: 10 # guest # reporter developer master # owner only for group
+
+#  - name: "group repo test2 for group1"
+#    path: test2
+#    namespace: group1
+#    description: "my test2"
+#    visibility: "private"
+#    delete: false
+#
+#  - name: "group repo test3 for group2"
+#    path: test3
+#    namespace: group2
+#    delete: false
+#
+#  - name: "group repo test3 for group2"
+#    path: test3
+#    namespace: group2
+#    issues_enabled: false
+#    jobs_enabled: false
+#    wiki_enabled: false
+#    snippets_enabled: false
+#    merge_requests_enabled: false
+#    description: "my test3"
+#    visibility: "private"
+#    delete: false

@@ -45,3 +45,15 @@
   when: ( ( current_group.id is defined ) and ( current_group.id is not none ) and (current_group.id | trim !="") )
        and ( ( item.delete is not defined ) or ( item.delete is defined and not item.delete ) )
        and ( gitlab_update_groups is defined ) and ( gitlab_update_groups | bool )
+
+- include: setup_member_each.yml
+  vars:
+    name: "{{ item.name }}"
+    group_id: "{{ current_group.id }}"
+    member: "{{ member_item }}"
+  with_items: "{{ item.members }}"
+  loop_control:
+    loop_var: member_item
+  when: ( ( current_group.id is defined ) and ( current_group.id is not none ) and (current_group.id | trim !="") )
+       and ( ( item.delete is not defined ) or ( item.delete is defined and not item.delete ) )
+       and ( gitlab_update_groups is defined ) and ( gitlab_update_groups | bool )

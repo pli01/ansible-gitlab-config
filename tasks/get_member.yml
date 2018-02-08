@@ -1,0 +1,17 @@
+---
+- name: "Get current members for {{ kind }} {{ name }}"
+  uri:
+    url: '{{ gitlab_api_url }}/{{ kind }}/{{ id }}/members/{{ userid |default("") }}'
+    method: GET
+    headers:
+      PRIVATE-TOKEN: "{{ gitlab_token }}"
+    status_code: 200,404
+    validate_certs: "no"
+  register: gitlab_members_request
+
+- set_fact:
+    current_member: ""
+
+- set_fact:
+    current_member: "{{ gitlab_members_request.json | first }}"
+  when: ( gitlab_members_request.json is defined ) and ( gitlab_members_request.json | length > 0 )

@@ -1,0 +1,60 @@
+---
+# name
+# group_id
+# json
+- debug:
+    msg: >
+      { {{ item }},
+      {{ member }},
+      {{ group_id }},
+       }
+- name: "Get {{ member.name }} id ?"
+  debug: var=member.name
+- include: get_user.yml
+  vars:
+    username: "{{ member.name }}"
+
+- name: "{{ member.name }} exists ?"
+  assert:
+    that: "current_user.id is defined"
+    msg: "{{ member.name }} does not exist"
+
+- name: "Get all members of group {{ item.name }}"
+  debug: msg="GET /groups/{{ group_id }}/members"
+- include: get_member.yml
+  vars:
+    name: "{{ item.name }}"
+    kind: "groups"
+    id: "{{ current_group.id }}"
+    userid: ""
+
+- name: "Is user {{ member.name }} a member of group {{ item.name }} ?"
+  debug: msg="GET /groups/{{ group_id }}/members/{{ member.name }}"
+  when: current_user.id is defined
+- include: get_member.yml
+  vars:
+    name: "{{ item.name }}"
+    kind: "groups"
+    id: "{{ current_group.id }}"
+    userid: "{{ current_user.id }}"
+  when: current_user.id is defined
+
+- name: "delete members if user deleted"
+  debug: msg="DELETE /groups/{{ group_id }}/members/{{ member.name }}"
+  when: ( member.delete is defined ) and ( current_user.id is defined ) and ( current_member.id is defined )
+
+- name: "add members if not user member of group"
+  debug: msg="POST /groups/{{ group_id }}/members {{ member.name }}"
+  when: ( current_user.id is defined ) and ( current_member.id is not defined )
+- include: create_member.yml
+  vars:
+    name: "{{ item.name }}"
+    kind: "groups"
+    id: "{{ current_group.id }}"
+    userid: "{{ current_user.id }}"
+    json: "{{ member }}"
+  when: ( current_user.id is defined ) and ( current_member.id is not defined )
+
+- name: "update members if user member of group"
+  debug: msg="PUT /groups/{{ group_id }}/members/{{ member.name }}"
+  when: ( current_user.id is defined ) and ( current_member.id is defined )

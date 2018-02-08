@@ -1,0 +1,16 @@
+---
+- name: "Get user id {{ username }}"
+  uri:
+    url: "{{ gitlab_api_url }}/users?username={{ username }}"
+    method: GET
+    headers:
+      PRIVATE-TOKEN: "{{ gitlab_token }}"
+    status_code: 200
+    validate_certs: "no"
+  register: gitlab_users_request
+
+- set_fact:
+    current_user: ""
+- set_fact:
+    current_user: "{{ gitlab_users_request.json | first }}"
+  when: ( gitlab_users_request.json is defined ) and ( gitlab_users_request.json | length > 0 )

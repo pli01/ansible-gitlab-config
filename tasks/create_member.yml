@@ -1,0 +1,23 @@
+---
+# https://docs.gitlab.com/ce/api/members.html
+- set_fact:
+    body: >
+      {{ lookup('template', 'create_member.json.j2', convert_data=False ) }}
+
+#- debug: var=body
+
+- name: "Add member {{ member.name }} in {{ kind }} {{ name }}"
+  uri:
+    url: '{{ gitlab_api_url }}/{{ kind }}/{{ id }}/members'
+    method: POST
+    headers:
+      Content-Type: application/json
+      PRIVATE-TOKEN: "{{ gitlab_token }}"
+    status_code: 201,409
+    body_format: json
+    body: '{{ body }}'
+    validate_certs: "no"
+  changed_when: true
+  register: gitlab_create_member
+
+#- debug: var=gitlab_create_member.json
