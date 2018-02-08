@@ -5,7 +5,7 @@
     validate_certs: "no"
     return_content: yes
     follow_redirects: all
-    until: gitlab_version_request.status == 200
+    until: gitlab_login_request.status == 200
     retries: 240
     delay: 1
   register: gitlab_login_request
