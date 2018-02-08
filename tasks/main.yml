@@ -13,6 +13,9 @@
         or ( ( gitlab_password is not defined ) or ( gitlab_password is none )  or ( gitlab_password | trim =="" ) )
         )
 
+- name: "Wait Gitlab ready"
+  include: "wait_gitlab.yaml"
+
 - name: "Get Gitlab token"
   include: "get_token.yaml"
   when: ( gitlab_token is not defined ) or ( gitlab_token is none )  or ( gitlab_token | trim =="" )
