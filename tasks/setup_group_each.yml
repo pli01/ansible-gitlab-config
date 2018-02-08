@@ -15,6 +15,7 @@
 - set_fact:
     group_path_urlencoded: "{{ group_path | regex_replace(pattern, replace ) }}"
 
+# get
 - include: get_group.yml
   vars:
     name: "{{ group_path }}"
@@ -28,6 +29,7 @@
   when: ( gitlab_groups_request.json is defined ) and ( gitlab_groups_request.json | length > 1)
         and ( gitlab_groups_request.status == 200 )
 
+# delete
 - include: delete_group.yml
   vars:
     name: "{{ item.name }}"
@@ -36,6 +38,7 @@
   when: ( current_group.id is defined )
         and ( item.delete is defined ) and ( item.delete | bool )
 
+# create
 - include: create_group.yml
   vars:
     name: "{{ item.name }}"
@@ -43,6 +46,7 @@
   when: ( current_group.id is not defined )
        and ( ( item.delete is not defined ) or ( ( item.delete is defined ) and not ( item.delete | bool ) ) )
 
+# update
 - include: update_group.yml
   vars:
     name: "{{ item.name }}"

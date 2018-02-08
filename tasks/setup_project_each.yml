@@ -19,6 +19,7 @@
 - set_fact:
     path_with_namespace_urlencoded: "{{ path_with_namespace | regex_replace(pattern, replace ) }}"
 
+# get
 - include: get_project.yml
   vars:
     name: "{{ path_with_namespace }}"
@@ -30,10 +31,8 @@
 
 - set_fact:
     current_project: "{{ gitlab_projects_request.json }}"
-  when: ( gitlab_projects_request.json is defined ) and ( gitlab_projects_request.json )
+  when: ( gitlab_projects_request.json is defined ) and ( gitlab_projects_request.json | length > 1)
         and ( gitlab_projects_request.status == 200 )
-
-# - debug: var=gitlab_projects_request
 
 - include: get_namespace.yml
   vars:
@@ -48,15 +47,14 @@
   when: ( gitlab_namespaces_request.json is defined ) and ( gitlab_namespaces_request.json )
         and ( gitlab_namespaces_request.status == 200 )
 
-#- debug: var=gitlab_namespaces_request
-
+# delete
 - include: delete_project.yml
   vars:
     name: "{{ path_with_namespace }}"
     path_name: "{{ path_with_namespace_urlencoded }}"
     project_id: "{{ current_project.id }}"
     json: "{{ item }}"
-  when: ( current_project.id is defined ) and ( current_project.id )
+  when: ( current_project.id is defined )
         and ( item.delete is defined ) and ( item.delete | bool )
 
 #- name: "DEBUGG "
@@ -69,22 +67,27 @@
 #      {{ current_project.id | default ('none') }}
 #      {{ current_namespace.id | default ('none') }}
 
+# create
 - include: create_project.yml
   vars:
     name: "{{ item.name }}"
     namespace: "{{ current_namespace }}"
     json: "{{ item }}"
-  when: ( ( current_project.id is not defined ) or ( current_project.id is none ) or ( current_project.id | trim =="" ) )
-        and ( ( current_namespace.id is defined ) or ( current_namespace.id ) )
-        and ( ( item.delete is not defined ) or ( item.delete is defined and not ( item.delete | bool ) ) )
+  when: ( ( current_project.id is not defined )
+       and ( current_namespace.id is defined )
+       and ( ( item.delete is not defined ) or ( item.delete is defined and not ( item.delete | bool ) ) )
 
+# update
 - include: update_project.yml
   vars:
     name: "{{ item.name }}"
     path_name: "{{ path_with_namespace_urlencoded }}"
     project_id: "{{ current_project.id }}"
     json: "{{ item }}"
-  when: ( ( current_project.id is defined ) and ( current_project.id is not none ) and (current_project.id | trim !="") )
-        and ( ( current_namespace.id is defined ) or ( current_namespace.id ) )
-        and ( ( item.delete is not defined ) or ( item.delete is defined and not item.delete ) )
+  when: ( ( current_project.id is defined )
+       and ( current_namespace.id is defined )
+       and ( ( item.delete is not defined ) or ( ( item.delete is defined ) and not ( item.delete | bool ) ) )
         and ( gitlab_update_projects is defined ) and ( gitlab_update_projects | bool )
+#
+# Add members
+#
