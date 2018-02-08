@@ -33,7 +33,7 @@
     name: "{{ item.name }}"
     group_id: "{{ current_group.id }}"
     json: "{{ item }}"
-  when: ( current_group.id is defined ) and ( current_group.id )
+  when: ( current_group.id is defined )
         and ( item.delete is defined ) and ( item.delete | bool )
 
 - include: create_group.yml
@@ -41,7 +41,7 @@
     name: "{{ item.name }}"
     json: "{{ item }}"
   when: ( current_group.id is not defined )
-       and ( item.delete is not defined ) or ( ( item.delete is defined ) and not ( item.delete | bool ) )
+       and ( ( item.delete is not defined ) or ( ( item.delete is defined ) and not ( item.delete | bool ) ) )
 
 - include: update_group.yml
   vars:
