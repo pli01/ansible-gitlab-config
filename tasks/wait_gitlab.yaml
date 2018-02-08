@@ -1,0 +1,9 @@
+- name: "Wait gitlab ready and login"
+  uri:
+    url: "{{ gitlab_host }}/users/sign_in"
+    method: GET
+    follow_redirects: all
+  until: ( gitlab_login_request | success ) and ( gitlab_login_request.status == 200)
+  retries: 240
+  delay: 1
+  register: gitlab_login_request
