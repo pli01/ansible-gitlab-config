@@ -84,6 +84,7 @@ ci_config_path 	string 	no 	The path to CI config file
 {#- TODO: avatar -#}
 {%- if ( json.printing_merge_request_link_enabled is defined ) -%}
   'printing_merge_request_link_enabled': '{{ json.printing_merge_request_link_enabled | default ("false") | bool | lower }}',
+{%- endif -%}
 {%- if ( json.ci_config_path is defined ) and ( json.ci_config_path ) -%}
   'ci_config_path': '{{ json.ci_config_path | default ("") }}',
 {%- endif -%}
