@@ -6,21 +6,27 @@
 #      path: value
 #      description: value
 #
-- name: "Get current settings for group {{ item.name }}"
-  uri:
-    url: "{{ gitlab_api_url }}/groups?search={{ item.name }}"
-    method: GET
-    headers:
-      PRIVATE-TOKEN: "{{ gitlab_token }}"
-    status_code: 200
-    validate_certs: "no"
-  register: gitlab_groups_request
+# Dirty: urlencode does not encode slash
+- set_fact:
+    group_path: '{{ item.path }}'
+    pattern: '\/'
+    replace: "%2F"
+
+- set_fact:
+    group_path_urlencoded: "{{ group_path | regex_replace(pattern, replace ) }}"
+
+- include: get_group.yml
+  vars:
+    name: "{{ group_path }}"
+    path_name: "{{ group_path_urlencoded }}"
+    json: "{{ item }}"
 
 - set_fact:
     current_group: ""
 - set_fact:
-    current_group: "{{ gitlab_groups_request.json | first }}"
-  when: ( gitlab_groups_request.json is defined ) and ( gitlab_groups_request.json )
+    current_group: "{{ gitlab_groups_request.json }}"
+  when: ( gitlab_groups_request.json is defined ) and ( gitlab_groups_request.json | length > 1)
+        and ( gitlab_groups_request.status == 200 )
 
 - include: delete_group.yml
   vars:
@@ -34,16 +40,16 @@
   vars:
     name: "{{ item.name }}"
     json: "{{ item }}"
-  when: ( ( current_group.id is not defined ) or ( current_group.id is none ) or ( current_group.id | trim =="" ) )
-       and ( item.delete is not defined ) or ( item.delete is defined and not ( item.delete | bool ) )
+  when: ( current_group.id is not defined )
+       and ( item.delete is not defined ) or ( ( item.delete is defined ) and not ( item.delete | bool ) )
 
 - include: update_group.yml
   vars:
     name: "{{ item.name }}"
     group_id: "{{ current_group.id }}"
     json: "{{ item }}"
-  when: ( ( current_group.id is defined ) and ( current_group.id is not none ) and (current_group.id | trim !="") )
-       and ( ( item.delete is not defined ) or ( item.delete is defined and not item.delete ) )
+  when: ( current_group.id is defined )
+       and ( ( item.delete is not defined ) or ( ( item.delete is defined ) and not ( item.delete | bool ) ) )
        and ( gitlab_update_groups is defined ) and ( gitlab_update_groups | bool )
 
 - include: setup_member_each.yml
@@ -54,6 +60,6 @@
   with_items: "{{ item.members }}"
   loop_control:
     loop_var: member_item
-  when: ( ( current_group.id is defined ) and ( current_group.id is not none ) and (current_group.id | trim !="") )
-       and ( ( item.delete is not defined ) or ( item.delete is defined and not item.delete ) )
+  when: ( current_group.id is defined )
+       and ( ( item.delete is not defined ) or ( ( item.delete is defined ) and not ( item.delete | bool ) ) )
        and ( gitlab_update_groups is defined ) and ( gitlab_update_groups | bool )

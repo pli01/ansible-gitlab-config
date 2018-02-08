@@ -1,0 +1,22 @@
+---
+- name: "Get current settings for group {{ name }}"
+  uri:
+    url: '{{ gitlab_api_url }}/groups/{{ path_name }}'
+    method: GET
+    headers:
+      PRIVATE-TOKEN: "{{ gitlab_token }}"
+    status_code: 200,404
+    validate_certs: "no"
+  register: gitlab_groups_request
+
+#
+#- name: "Get current settings for group {{ item.name }}"
+#  uri:
+#    url: "{{ gitlab_api_url }}/groups?search={{ item.name }}"
+#    method: GET
+#    headers:
+#      PRIVATE-TOKEN: "{{ gitlab_token }}"
+#    status_code: 200
+#    validate_certs: "no"
+#  register: gitlab_groups_request
+#
