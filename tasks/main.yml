@@ -42,11 +42,11 @@
   with_items: "{{ gitlab_local_users }}"
 
 # Manage Gitlab groups
-- name: "Manage Gitlab local groups"
+- name: "Manage Gitlab groups"
   include: setup_group_each.yml
   with_items: "{{ gitlab_groups }}"
 
 # Manage Gitlab projects
-- name: "Manage Gitlab local projects"
+- name: "Manage Gitlab projects"
   include: setup_project_each.yml
   with_items: "{{ gitlab_projects }}"

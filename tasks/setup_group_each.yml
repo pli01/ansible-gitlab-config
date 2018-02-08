@@ -52,6 +52,22 @@
        and ( ( item.delete is not defined ) or ( ( item.delete is defined ) and not ( item.delete | bool ) ) )
        and ( gitlab_update_groups is defined ) and ( gitlab_update_groups | bool )
 
+#
+# Add members
+#
+- include: get_group.yml
+  vars:
+    name: "{{ group_path }}"
+    path_name: "{{ group_path_urlencoded }}"
+    json: "{{ item }}"
+
+- set_fact:
+    current_group: ""
+- set_fact:
+    current_group: "{{ gitlab_groups_request.json }}"
+  when: ( gitlab_groups_request.json is defined ) and ( gitlab_groups_request.json | length > 1)
+        and ( gitlab_groups_request.status == 200 )
+
 - include: setup_member_each.yml
   vars:
     name: "{{ item.name }}"
