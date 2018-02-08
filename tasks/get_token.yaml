@@ -6,7 +6,7 @@
     return_content: yes
     follow_redirects: all
     until: gitlab_version_request.status == 200
-    retries: 10
+    retries: 240
     delay: 1
   register: gitlab_login_request
 
