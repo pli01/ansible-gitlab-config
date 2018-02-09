@@ -77,6 +77,7 @@
     name: "{{ item.name }}"
     group_id: "{{ current_group.id }}"
     member: "{{ member_item }}"
+    _kind: "groups"
   with_items: "{{ item.members }}"
   loop_control:
     loop_var: member_item

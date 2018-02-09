@@ -10,8 +10,8 @@ gitlab_application_settings: {}
 #  signin_enabled: true
 
 gitlab_update_users: true
-_gitlab_local_users: []
-gitlab_local_users:
+gitlab_local_users: []
+_gitlab_local_users:
 #  - username: test-user1
 #    delete: true
 #    hard_delete: true
@@ -66,11 +66,9 @@ gitlab_local_users:
 ##    delete: true
 ##    hard_delete: true
 #
-i_gitlab_groups: []
+_gitlab_groups: []
+gitlab_update_groups: true
 gitlab_groups:
-#  - name: test
-#    delete: true
-
   - name: group1
     path: group1
 #    delete: true
@@ -86,7 +84,7 @@ gitlab_groups:
       - name: test-user3
         access_level:  10 # guest # reporter developer master 
         expires_at: "2016-09-26"
-#
+
 #  - name: group2
 #    path: group2
 ##    delete: true
@@ -103,17 +101,20 @@ gitlab_groups:
 #        expires_at: "2016-09-26"
 #
 gitlab_update_projects: true
-gitlab_projects: []
-_gitlab_projects:
+# gitlab_projects: []
+gitlab_projects:
   - name: "user repo test1 for gitlab-config"
     path: test1
-    namespace: gitlab-config
+    namespace: group1
     description: "my test1 updated"
     delete: false
     members:
-      - name: test-user1
+      - name: test-user2
         access_level: 10 # guest # reporter developer master 
-        expires_at: "2016-09-26"
+        delete: true
+      - name: test-user3
+        access_level: 10 # guest # reporter developer master 
+        delete: true
     share:
       - name: group1
         group_access: 10 # guest # 

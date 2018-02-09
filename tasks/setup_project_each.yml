@@ -73,7 +73,7 @@
     name: "{{ item.name }}"
     namespace: "{{ current_namespace }}"
     json: "{{ item }}"
-  when: ( ( current_project.id is not defined )
+  when: ( current_project.id is not defined )
        and ( current_namespace.id is defined )
        and ( ( item.delete is not defined ) or ( item.delete is defined and not ( item.delete | bool ) ) )
 
@@ -84,10 +84,50 @@
     path_name: "{{ path_with_namespace_urlencoded }}"
     project_id: "{{ current_project.id }}"
     json: "{{ item }}"
-  when: ( ( current_project.id is defined )
+  when: ( current_project.id is defined )
        and ( current_namespace.id is defined )
        and ( ( item.delete is not defined ) or ( ( item.delete is defined ) and not ( item.delete | bool ) ) )
         and ( gitlab_update_projects is defined ) and ( gitlab_update_projects | bool )
 #
 # Add members
 #
+# get
+- include: get_project.yml
+  vars:
+    name: "{{ path_with_namespace }}"
+    path_name: "{{ path_with_namespace_urlencoded }}"
+    json: "{{ item }}"
+
+- set_fact:
+    current_project: ""
+
+- set_fact:
+    current_project: "{{ gitlab_projects_request.json }}"
+  when: ( gitlab_projects_request.json is defined ) and ( gitlab_projects_request.json | length > 1)
+        and ( gitlab_projects_request.status == 200 )
+
+- include: get_namespace.yml
+  vars:
+    name: "{{ item.namespace }}"
+    json: "{{ item }}"
+
+- set_fact:
+    current_namespace: ""
+
+- set_fact:
+    current_namespace: "{{ gitlab_namespaces_request.json }}"
+  when: ( gitlab_namespaces_request.json is defined ) and ( gitlab_namespaces_request.json )
+        and ( gitlab_namespaces_request.status == 200 )
+
+- include: setup_member_each.yml
+  vars:
+    name: "{{ item.name }}"
+    group_id: "{{ current_project.id }}"
+    member: "{{ member_item }}"
+    _kind: "projects"
+  with_items: "{{ item.members }}"
+  loop_control:
+    loop_var: member_item
+  when: ( current_project.id is defined )
+       and ( ( item.delete is not defined ) or ( ( item.delete is defined ) and not ( item.delete | bool ) ) )
+       and ( gitlab_update_projects is defined ) and ( gitlab_update_projects | bool )

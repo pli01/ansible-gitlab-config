@@ -13,5 +13,7 @@
     current_member: ""
 
 - set_fact:
-    current_member: "{{ gitlab_members_request.json | first }}"
-  when: ( gitlab_members_request.json is defined ) and ( gitlab_members_request.json | length > 0 )
+    current_member: "{{ gitlab_members_request.json }}"
+  when: ( gitlab_members_request.json is defined ) and ( gitlab_members_request.json )
+
+- debug: var=gitlab_members_request.json
